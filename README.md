@@ -1,2 +1,2 @@
-# infect
-Infect - Assignment 5, CPE 203
+# cpe203_world
+A virtual world with vein and ore and miners, oh my!
