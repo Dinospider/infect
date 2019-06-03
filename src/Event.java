@@ -11,18 +11,15 @@ final class Event
       this.entity = entity;
    }
 
-   public Entity getEntity()
-   {
-      return entity;
-   }
-
-   public long getTime()
-   {
-      return time;
-   }
-
    public Action getAction() {
-      return action;
+      return this.action;
+   }
+
+   public long getTime() {
+      return this.time;
+   }
+
+   public Entity getEntity() {
+      return this.entity;
    }
 }
-//Event? I guess but idk what it actually does. Has an action a time and an entity

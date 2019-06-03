@@ -3,8 +3,7 @@ import processing.core.PImage;
 import java.util.List;
 import java.util.Optional;
 
-public class Vein extends DynamicEntity
-{
+public class Vein extends ActionEntity {
 
     public static final String VEIN_KEY = "vein";
     public static final int VEIN_NUM_PROPERTIES = 5;
@@ -14,30 +13,27 @@ public class Vein extends DynamicEntity
     public static final int VEIN_ACTION_PERIOD = 4;
 
 
-    Vein(String id, Point position, int actionPeriod, List<PImage> images)
+    public Vein(String id, Point position, List<PImage> images, int actionPeriod)
     {
-        super(id,position,actionPeriod,images, 0);
+        super(id, position, images, actionPeriod);
+
+
     }
 
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler)
     {
-        Optional<Point> openPt = world.findOpenAround(position);
+        Optional<Point> openPt = world.findOpenAround(this.position);
 
         if (openPt.isPresent())
         {
             Ore ore = new Ore(Ore.ORE_ID_PREFIX + this.id,
-                    openPt.get(), Ore.ORE_CORRUPT_MIN +
-                            Ore.rand.nextInt(Ore.ORE_CORRUPT_MAX - Ore.ORE_CORRUPT_MIN),
-                    imageStore.getImageList(Ore.ORE_KEY));
+                    openPt.get(), imageStore.getImageList(Ore.ORE_KEY), Ore.ORE_CORRUPT_MIN +
+                            ActionEntity.rand.nextInt(Ore.ORE_CORRUPT_MAX - Ore.ORE_CORRUPT_MIN));
             world.addEntity(ore);
             ore.scheduleActions(scheduler, world, imageStore);
         }
 
-        scheduler.scheduleEvent(this,
-                new Activity(this, world, imageStore),
-                this.actionPeriod);
-
-        //above is same as scheduleActions
+        scheduler.scheduleEvent(this, new Activity(this, world, imageStore), this.actionPeriod);
     }
 
 }

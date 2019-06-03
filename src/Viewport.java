@@ -1,7 +1,3 @@
-import processing.core.PImage;
-
-import java.util.Optional;
-
 final class Viewport
 {
    private int row;
@@ -14,20 +10,21 @@ final class Viewport
       this.numRows = numRows;
       this.numCols = numCols;
    }
-   public int getRow(){
-      return row;
+
+   public int getRow() {
+      return this.row;
    }
 
    public int getCol() {
-      return col;
+      return this.col;
    }
 
    public int getNumRows() {
-      return numRows;
+      return this.numRows;
    }
 
    public int getNumCols() {
-      return numCols;
+      return this.numCols;
    }
 
    public void shift(int col, int row)
@@ -38,8 +35,8 @@ final class Viewport
 
    public boolean contains(Point p)
    {
-      return p.getY() >= row && p.getY() < row + numRows &&
-              p.getX() >= col && p.getX() < col + numCols;
+      return p.y >= this.row && p.y < this.row + this.numRows &&
+              p.x >= this.col && p.x < this.col + this.numCols;
    }
 
    public Point viewportToWorld(int col, int row)
@@ -52,4 +49,3 @@ final class Viewport
       return new Point(col - this.col, row - this.row);
    }
 }
-//I'm guessing stores information for how big the viewing window is

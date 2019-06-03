@@ -1,45 +1,38 @@
-import java.util.List;
 import processing.core.PImage;
+
+import java.util.List;
 
 public abstract class Entity
 {
-   //private EntityKind kind;
-   protected String id;
-   protected Point position;
-   protected List<PImage> images;
-   protected int imageIndex;
-//   private int resourceLimit;
-//   private int resourceCount;
-//   private int actionPeriod;
-//   private int animationPeriod;
+    protected String id;
+    protected Point position;
+    protected List<PImage> images;
 
-   public Point getPosition()
-   {
-      return position;
-   }
+    public Entity(String id, Point position, List<PImage> images) {
+        this.id = id;
+        this.position = position;
+        this.images = images;
+    }
 
-   public void setPosition(Point position)
-   {
-      this.position = position;
-   }
+    public List<PImage> getImages() {
+        return this.images;
+    }
 
-   public List<PImage> getImages()
-   {
-      return images;
-   }
+    public int getImageIndex() {
+        return 0;
+    }
 
-   public PImage getCurrentImage()
-   {
-         return (images.get(imageIndex));
-   }
+    public Point getPosition() {
+        return this.position;
+    }
 
-   Entity(String id, Point position, List<PImage> images, int imageIndex)
-   {
-      this.id = id;
-      this.position = position;
-      this.images = images;
-      this.imageIndex = imageIndex;
-   }
+    public PImage getCurrentImage()
+    {
+        return this.getImages().get(this.getImageIndex());
+    }
+
+    public void setPosition(Point position) {
+        this.position = position;
+    }
 
 }
-

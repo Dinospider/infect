@@ -3,39 +3,36 @@ import processing.core.PImage;
 import java.util.List;
 import java.util.Optional;
 
-public class MinerNotFull extends Miner
-{
-    private int resourceCount;
+public class MinerNotFull extends MinerEntity {
 
-    MinerNotFull(String id, int resourceLimit, Point position, int actionPeriod, int animationPeriod, List<PImage> images)
+    public MinerNotFull(String id, Point position,
+                     List<PImage> images, int resourceLimit,
+                     int actionPeriod, int animationPeriod)
     {
-        super(id,position,actionPeriod, animationPeriod, images, 0, resourceLimit);
+        super(id, position, images, 0, actionPeriod, animationPeriod, resourceLimit, 0);
     }
 
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler)
     {
-        Optional<Entity> notFullTarget = world.findNearest(this.position,
-                Ore.class);
 
-        if (!notFullTarget.isPresent() ||
-                !moveTo(world, notFullTarget.get(), scheduler) ||
-                !transformNotFull(world, scheduler, imageStore))
+        Optional<Entity> notFullTarget = world.findNearest(this.position, Ore.class);
+
+        if (this.transformZombie(world, imageStore, scheduler) || !notFullTarget.isPresent() || !this.moveTo(world, notFullTarget.get(), scheduler) || !this.transformNotFull(world, scheduler, imageStore))
         {
-            scheduler.scheduleEvent(this,
-                    new Activity(this, world, imageStore),
-                    this.actionPeriod);
+
+            scheduler.scheduleEvent(this, new Activity(this, world, imageStore), this.actionPeriod);
         }
+
     }
 
 
     public boolean transformNotFull(WorldModel world,
                                     EventScheduler scheduler, ImageStore imageStore)
     {
-        if (resourceCount >= resourceLimit)
+        if (this.resourceCount >= this.resourceLimit)
         {
-            MinerFull miner = new MinerFull(id, resourceLimit,
-                    position, actionPeriod, animationPeriod,
-                    images);
+            MinerFull miner = new MinerFull(this.id, this.position, this.images, this.resourceLimit, this.resourceLimit,
+                     this.actionPeriod, this.animationPeriod);
 
             world.removeEntity(this);
             scheduler.unscheduleAllEvents(this);
@@ -49,11 +46,14 @@ public class MinerNotFull extends Miner
         return false;
     }
 
-    public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler)
+
+    public boolean moveTo(WorldModel world,
+                          Entity target, EventScheduler scheduler)
     {
+
         if (this.position.adjacent(target.getPosition()))
         {
-            resourceCount += 1;
+            this.resourceCount += 1;
             world.removeEntity(target);
             scheduler.unscheduleAllEvents(target);
 
@@ -61,7 +61,15 @@ public class MinerNotFull extends Miner
         }
         else
         {
-            Point nextPos = nextPosition(world, target.getPosition());
+//            List<Point> path = strategy.computePath(this.position, target.position,
+//                    p ->  !world.isOccupied(p),
+//                    (p1, p2) -> p1.adjacent(p2),
+//                    PathingStrategy.CARDINAL_NEIGHBORS);
+//            if (path.size() == 0) {
+//                return false;
+//            }
+
+            Point nextPos = this.nextPosition(world, target.getPosition());
 
             if (!this.position.equals(nextPos))
             {
@@ -75,6 +83,26 @@ public class MinerNotFull extends Miner
             }
             return false;
         }
+    }
+
+    public boolean transformZombie(WorldModel world, ImageStore imageStore, EventScheduler scheduler)
+    {
+        if (world.getBackgroundCell(this.position).getId().equals("background_toxic")) {
+            Point newPos = this.position;
+            world.removeEntity(this);
+            scheduler.unscheduleAllEvents(this);
+
+            ZombieMiner zombieMiner = new ZombieMiner(ZombieMiner.ZOMBIE_MINER_KEY, newPos, imageStore.getImageList(ZombieMiner.ZOMBIE_MINER_KEY),
+                    4, 4);
+//        long nextPeriod = this.actionPeriod;
+
+            world.addEntity(zombieMiner);
+//        nextPeriod += this.actionPeriod;
+            zombieMiner.scheduleActions(scheduler, world, imageStore);
+            return true;
+        }
+        return false;
+
     }
 
 }

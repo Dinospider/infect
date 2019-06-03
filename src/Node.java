@@ -1,62 +1,67 @@
-import java.util.Objects;
+public class Node {
 
-public class Node
-{
-    private Point pos;
-    private double f;
-    private double g;
-    private double h;
-    private Node prev;
+    private Point point;
 
-    Node(Point p, double h, Node prev)
-    {
-        this.pos = p;
-        this.prev = prev;
-        if(prev == null)
-        {
-            this.g = 0;
-        }
-        else
-        {
-            this.g = this.prev.getG() + 1;
-        }
+    private int g;
+    private int h;
+    private int f;
+    private Node priorNode;
+
+    public Node(Point point) {
+        this.point = point;
+        this.g = -1;
+        this.h = -1;
+        this.f = -1;
+        this.priorNode = null;
+    }
+
+    public int getG() {
+        return this.g;
+    }
+
+    public int getH() {
+        return this.h;
+    }
+
+    public int getF() {
+        return this.f;
+    }
+
+    public Node getPriorNode() {
+        return this.priorNode;
+    }
+
+    public Point getPoint() {
+        return this.point;
+    }
+
+    public void setG(int g) {
+        this.g = g;
+    }
+
+    public void setH(int h) {
         this.h = h;
-        this.f = this.h + this.g;
     }
 
-    public double getF()
-    {
-        return f;
+    public void setF(int f) {
+        this.f = f;
     }
 
-    public double getG()
-    {
-        return g;
+    public void setPriorNode(Node priorNode) {
+        this.priorNode = priorNode;
     }
 
-    public double getH()
+    public boolean equals(Object other)
     {
-        return h;
+        return other instanceof Node &&
+                ((Node)other).point.equals(this.point);
     }
 
-    public Point getPos()
+    public int hashCode()
     {
-        return pos;
-    }
-
-    public Node getPrev()
-    {
-        return prev;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if(obj == null)
-            return false;
-        else if(obj.getClass() != this.getClass())
-            return false;
-        Node other = (Node) obj;
-        return Objects.equals(pos, other.pos);
+        int result = 17;
+        result = result * 31 + point.x;
+        result = result * 31 + point.y;
+        return result;
     }
 }
