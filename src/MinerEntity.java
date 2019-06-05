@@ -21,17 +21,23 @@ public abstract class MinerEntity extends MoveEntity {
         this.resourceCount = resourceCount;
     }
 
-    public Point nextPosition(WorldModel world, Point destPos)
+    public boolean transformZombie(WorldModel world, ImageStore imageStore, EventScheduler scheduler)
     {
-        List<Point> path = strategy.computePath(this.position, destPos,
-                p ->  !world.isOccupied(p) && world.withinBounds(p),
-                (p1, p2) -> p1.adjacent(p2),
-                PathingStrategy.CARDINAL_NEIGHBORS);
-        if (path.size() == 0) {
-            return this.position;
-        }
+        if (world.getBackgroundCell(this.position).getId().equals("background_toxic")) {
+            Point newPos = this.position;
+            world.removeEntity(this);
+            scheduler.unscheduleAllEvents(this);
 
-        Point nextPos = path.get(0);
-        return nextPos;
+            ZombieMiner zombieMiner = new ZombieMiner(ZombieMiner.ZOMBIE_MINER_KEY, newPos,
+                    imageStore.getImageList(ZombieMiner.ZOMBIE_MINER_KEY),
+                    500, 4);
+
+            world.addEntity(zombieMiner);
+            zombieMiner.scheduleActions(scheduler, world, imageStore);
+            return true;
+        }
+        return false;
+
     }
+
 }

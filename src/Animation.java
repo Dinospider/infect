@@ -19,9 +19,4 @@ public class Animation implements Action {
                     this.entity.getAnimationPeriod());
         }
     }
-
-//    public static Action createAnimationAction(Entity entity, int repeatCount)
-//    {
-//        return new Animation(entity, repeatCount);
-//    }
 }

@@ -17,18 +17,5 @@ public class Activity implements Action {
     public void executeAction(EventScheduler scheduler)
     {
         this.entity.executeActivity(this.world, this.imageStore, scheduler);
-//        } else {
-//            throw new UnsupportedOperationException(
-//                    String.format("executeActivityAction not supported for %s",
-//                            this.entity.getClass()));
-//        }
     }
-
-//    public static Action createActivityAction(Entity entity, WorldModel world,
-//                                              ImageStore imageStore)
-//    {
-//        return new Activity(entity, world, imageStore);
-//    }
-
-
 }

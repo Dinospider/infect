@@ -132,17 +132,27 @@ public final class VirtualWorld
          }
       }
 
-      Parasite parasite1 = new Parasite(Parasite.PARASITE_KEY, new Point(pressed.x - 2, pressed.y + 1), imageStore.getImageList(Parasite.PARASITE_KEY),
-              4, 4);
+      Point pParasite1 = new Point(pressed.x - 2, pressed.y + 1);
+      Point pParasite2 = new Point(pressed.x, pressed.y - 1);
 
-      world.addEntity(parasite1);
-      parasite1.scheduleActions(scheduler, world, imageStore);
 
-      Parasite parasite2 = new Parasite(Parasite.PARASITE_KEY, new Point(pressed.x, pressed.y - 1), imageStore.getImageList(Parasite.PARASITE_KEY),
-              4, 4);
-      world.addEntity(parasite2);
-      parasite2.scheduleActions(scheduler, world, imageStore);
+      if(world.withinBounds(pParasite1) && !world.isOccupied(pParasite1))
+      {
+         Parasite parasite1 = new Parasite(Parasite.PARASITE_KEY, pParasite1, imageStore.getImageList(Parasite.PARASITE_KEY),
+                 800, 4);
 
+         world.addEntity(parasite1);
+         parasite1.scheduleActions(scheduler, world, imageStore);
+      }
+
+      if(world.withinBounds(pParasite2) && !world.isOccupied(pParasite2))
+
+      {
+         Parasite parasite2 = new Parasite(Parasite.PARASITE_KEY, pParasite2, imageStore.getImageList(Parasite.PARASITE_KEY),
+                 800, 4);
+         world.addEntity(parasite2);
+         parasite2.scheduleActions(scheduler, world, imageStore);
+      }
       redraw();
 
    }

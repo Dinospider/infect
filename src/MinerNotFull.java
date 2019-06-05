@@ -17,7 +17,11 @@ public class MinerNotFull extends MinerEntity {
 
         Optional<Entity> notFullTarget = world.findNearest(this.position, Ore.class);
 
-        if (this.transformZombie(world, imageStore, scheduler) || !notFullTarget.isPresent() || !this.moveTo(world, notFullTarget.get(), scheduler) || !this.transformNotFull(world, scheduler, imageStore))
+        if(this.transformZombie(world, imageStore, scheduler))
+        {
+
+        }
+        else if (!notFullTarget.isPresent() || !this.moveTo(world, notFullTarget.get(), scheduler) || !this.transformNotFull(world, scheduler, imageStore))
         {
 
             scheduler.scheduleEvent(this, new Activity(this, world, imageStore), this.actionPeriod);
@@ -61,14 +65,6 @@ public class MinerNotFull extends MinerEntity {
         }
         else
         {
-//            List<Point> path = strategy.computePath(this.position, target.position,
-//                    p ->  !world.isOccupied(p),
-//                    (p1, p2) -> p1.adjacent(p2),
-//                    PathingStrategy.CARDINAL_NEIGHBORS);
-//            if (path.size() == 0) {
-//                return false;
-//            }
-
             Point nextPos = this.nextPosition(world, target.getPosition());
 
             if (!this.position.equals(nextPos))
@@ -85,24 +81,5 @@ public class MinerNotFull extends MinerEntity {
         }
     }
 
-    public boolean transformZombie(WorldModel world, ImageStore imageStore, EventScheduler scheduler)
-    {
-        if (world.getBackgroundCell(this.position).getId().equals("background_toxic")) {
-            Point newPos = this.position;
-            world.removeEntity(this);
-            scheduler.unscheduleAllEvents(this);
-
-            ZombieMiner zombieMiner = new ZombieMiner(ZombieMiner.ZOMBIE_MINER_KEY, newPos, imageStore.getImageList(ZombieMiner.ZOMBIE_MINER_KEY),
-                    4, 4);
-//        long nextPeriod = this.actionPeriod;
-
-            world.addEntity(zombieMiner);
-//        nextPeriod += this.actionPeriod;
-            zombieMiner.scheduleActions(scheduler, world, imageStore);
-            return true;
-        }
-        return false;
-
-    }
 
 }

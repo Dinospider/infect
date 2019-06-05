@@ -52,14 +52,6 @@ public class OreBlob extends MoveEntity {
         }
         else
         {
-//            List<Point> path = strategy.computePath(this.position, target.position,
-//                    p ->  !world.isOccupied(p),
-//                    (p1, p2) -> p1.adjacent(p2),
-//                    PathingStrategy.CARDINAL_NEIGHBORS);
-//            if (path.size() == 0) {
-//                return false;
-//            }
-
             Point nextPos = this.nextPosition(world, target.getPosition());
 
 
@@ -77,41 +69,5 @@ public class OreBlob extends MoveEntity {
         }
     }
 
-    public Point nextPosition(WorldModel world, Point destPos)
-    {
-
-        List<Point> path = strategy.computePath(this.position, destPos,
-                p ->  !world.isOccupied(p) && world.withinBounds(p),
-                (p1, p2) -> p1.adjacent(p2),
-                PathingStrategy.CARDINAL_NEIGHBORS);
-        if (path.size() == 0) {
-            return this.position;
-        }
-
-        Point nextPos = path.get(0);
-        return nextPos;
-
-//        int horiz = Integer.signum(destPos.x - this.position.x);
-//        Point newPos = new Point(this.position.x + horiz,
-//                this.position.y);
-//
-//        Optional<Entity> occupant = world.getOccupant(newPos);
-//
-//        if (horiz == 0 ||
-//                (occupant.isPresent() && !(occupant.get().equals(Ore.class)))) //.getClass()??
-//        {
-//            int vert = Integer.signum(destPos.y - this.position.y);
-//            newPos = new Point(this.position.x, this.position.y + vert);
-//            occupant = world.getOccupant(newPos);
-//
-//            if (vert == 0 ||
-//                    (occupant.isPresent() && !(occupant.get().equals(Ore.class))))
-//            {
-//                newPos = this.position;
-//            }
-//        }
-//
-//        return newPos;
-    }
 
 }

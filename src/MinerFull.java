@@ -19,14 +19,15 @@ public class MinerFull extends MinerEntity {
     {
         Optional<Entity> fullTarget = world.findNearest(this.position, Blacksmith.class);
 
-        if (this.moveTo(world, fullTarget.get(), scheduler)) {
-            if (world.getBackgroundCell(this.position).getId().equals("background_toxic")) {
-                transformZombie(world, imageStore, scheduler);
+        if (this.moveTo(world, fullTarget.get(), scheduler))
+        {
+            if (transformZombie(world, imageStore, scheduler))
+            {
+
             }
-            if (fullTarget.isPresent()) {
-                {
-                    this.transformFull(world, scheduler, imageStore);
-                }
+            else if (fullTarget.isPresent())
+            {
+                this.transformFull(world, scheduler, imageStore);
             }
         }
         else
@@ -58,13 +59,6 @@ public class MinerFull extends MinerEntity {
         }
         else
         {
-//            List<Point> path = strategy.computePath(this.position, target.position,
-//                    p ->  !world.isOccupied(p),
-//                    (p1, p2) -> p1.adjacent(p2),
-//                    PathingStrategy.CARDINAL_NEIGHBORS);
-//            if (path.size() == 0) {
-//                return false;
-//            }
 
             Point nextPos = this.nextPosition(world, target.getPosition());
 
@@ -83,22 +77,4 @@ public class MinerFull extends MinerEntity {
             return false;
         }
     }
-
-    public void transformZombie(WorldModel world, ImageStore imageStore, EventScheduler scheduler)
-    {
-
-        Point newPos = this.position;
-        world.removeEntity(this);
-        scheduler.unscheduleAllEvents(this);
-
-        ZombieMiner zombieMiner = new ZombieMiner(ZombieMiner.ZOMBIE_MINER_KEY, newPos, imageStore.getImageList(ZombieMiner.ZOMBIE_MINER_KEY),
-                4, 4);
-//        long nextPeriod = this.actionPeriod;
-
-        world.addEntity(zombieMiner);
-//        nextPeriod += this.actionPeriod;
-        zombieMiner.scheduleActions(scheduler, world, imageStore);
-
-    }
-
 }

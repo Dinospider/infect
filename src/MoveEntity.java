@@ -20,6 +20,18 @@ public abstract class MoveEntity extends AnimationEntity{
 
     public abstract boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler);
 
-    public abstract Point nextPosition(WorldModel world, Point destPos);
+    public Point nextPosition(WorldModel world, Point destPos)
+    {
+        List<Point> path = strategy.computePath(this.position, destPos,
+                p ->  !world.isOccupied(p) && world.withinBounds(p),
+                (p1, p2) -> p1.adjacent(p2),
+                PathingStrategy.CARDINAL_NEIGHBORS);
+        if (path.size() == 0) {
+            return this.position;
+        }
+
+        Point nextPos = path.get(0);
+        return nextPos;
+    }
 
 }

@@ -28,3 +28,25 @@ quake images/quake6.bmp 255 255 255 0
 rocks images/rock.bmp
 vein images/vein.bmp
 background_default images/none.bmp
+background_toxic images/toxic_waste_bg.bmp
+parasite images/parasite1.bmp 255 255 255 0
+parasite images/parasite2.bmp 255 255 255 0
+parasite images/parasite3.bmp 255 255 255 0
+parasite images/parasite4.bmp 255 255 255 0
+parasite_blob images/parasite_blob1.bmp 255 255 255 0
+parasite_blob images/parasite_blob2.bmp 255 255 255 0
+parasite_blob images/parasite_blob3.bmp 255 255 255 0
+parasite_blob images/parasite_blob4.bmp 255 255 255 0
+parasite_blob images/parasite_blob5.bmp 255 255 255 0
+parasite_blob images/parasite_blob6.bmp 255 255 255 0
+parasite_blob images/parasite_blob7.bmp 255 255 255 0
+parasite_blob images/parasite_blob8.bmp 255 255 255 0
+parasite_blob images/parasite_blob9.bmp 255 255 255 0
+parasite_blob images/parasite_blob10.bmp 255 255 255 0
+parasite_blob images/parasite_blob11.bmp 255 255 255 0
+parasite_blob images/parasite_blob12.bmp 255 255 255 0
+zombie_miner images/zombie_miner1.bmp 255 255 255 0
+zombie_miner images/zombie_miner2.bmp 255 255 255 0
+zombie_miner images/zombie_miner3.bmp 255 255 255 0
+zombie_miner images/zombie_miner4.bmp 255 255 255 0
+zombie_miner images/zombie_miner5.bmp 255 255 255 0
