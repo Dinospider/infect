@@ -1,5 +1,29 @@
-How To Trigger The Event:  Click on any part of the world.  
--What Should Happen:  Radioactive chemicals spread across a small range of cells. Parasites may spawn. If a Miner (full / not full) walks on top of one of the radio-active squares, a Miner turns into a ZombieMiner. 
--What Affected Entities Do:  The ParasiteOreBlobs, along with the parasites, attack other OreBlobs to form ParasiteOreBlobs. A ZombieMiner targets only MinerFulls, because ZombieMiners are attracted to large collections of Ore and a MinerFull carries a lot of Ore on the way back to a Blacksmith. A ZombieMiner turns a MinerFull into a ZombieMiner.  
--New Entity & Behavior  Parasite - Finds an OreBlob to attack and turn into a Parasite OreBlob. Typically initiates a large chain of ParasiteOreBlobs.  
--Names & Coding Responsibility     Deon Lillo:       Designing ZombieMiner, Radioactive Background, and Parasite Icons       Mouse-click Event       Parasite OreBlob implementation       Parasite implementation                  Venkat Kondamuri:       ZombieMiner transformation and implementation       Refactoring - Infect, InfectOreBlob and all new inheritance classes       Debugging   - Code can be found at https://github.com/Dinospider/infect
+﻿How To Trigger The Event:
+     -Click on any part of the world.
+
+What Should Happen:
+     -Radioactive chemicals spread across a small range of cells.
+     -Parasites spawn on cetain tiles as long as those tiles are in bounds and not occupied.
+     -If a Miner (full / not full) walks on top of one of the radioactive squares, a Miner turns into a ZombieMiner.
+
+What Affected Entities Do:
+     -The ParasiteOreBlobs, along with the parasites, attack other OreBlobs to transform the OreBlobs into ParasiteOreBlobs.
+     -A ZombieMiner targets only MinerFulls, because ZombieMiners are attracted to large collections of Ore and a MinerFull carries a lot of Ore
+      on the way back to a Blacksmith. A ZombieMiner turns a MinerFull into a ZombieMiner.
+
+New Entity & Behavior:
+     -Parasite: Finds an OreBlob to attack and transforms it into a ParasiteOreBlob. Typically initiates a large chain of ParasiteOreBlobs.
+
+Names & Coding Responsibility:
+     Deon Lillo:
+          -Designing ZombieMiner, Radioactive Background, and Parasite Icons
+          -Mouse-click Event
+          -Parasite OreBlob implementation
+          -Parasite implementation
+
+     Venkat Kondamuri:
+          -ZombieMiner transformation and implementation
+          -Refactoring Infect, InfectOreBlob, and all new inheritance classes
+          -Debugging
+
+Code can be found at https://github.com/Dinospider/infect
